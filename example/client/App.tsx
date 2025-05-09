@@ -5,9 +5,21 @@ import { useTldrawAiExample } from './useTldrawAiExample'
 function App() {
 	const [editor, setEditor] = useState<Editor | null>(null) // [1]
 	return (
-		<div className="tldraw-ai-container">
-			<Tldraw persistenceKey="tldraw-ai-demo" onMount={setEditor} />
-			{editor && <InputBar editor={editor} />}
+		<div style={{ display: 'flex', height: '100vh' }}>
+			<div
+				style={{
+					width: '25%',
+					padding: '20px',
+					display: 'flex',
+					flexDirection: 'column',
+					borderRight: '1px solid #ccc',
+				}}
+			>
+				{editor && <InputBar editor={editor} />}
+			</div>
+			<div style={{ flex: 1 }} className="tldraw-ai-container">
+				<Tldraw persistenceKey="tldraw-ai-demo" onMount={setEditor} />
+			</div>
 		</div>
 	)
 }
@@ -69,10 +81,29 @@ function InputBar({ editor }: { editor: Editor }) {
 	)
 
 	return (
-		<div className="prompt-input">
-			<form onSubmit={handleSubmit}>
-				<input name="input" type="text" autoComplete="off" placeholder="Enter your prompt…" />
-				<button>{isGenerating ? <DefaultSpinner /> : 'Send'}</button>
+		<div
+			className="prompt-input"
+			style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+		>
+			<form
+				onSubmit={handleSubmit}
+				style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+			>
+				<textarea
+					name="input"
+					autoComplete="off"
+					placeholder="Enter your prompt…"
+					style={{
+						flexGrow: 1,
+						margin: 0,
+						marginBottom: '10px',
+						fontSize: '1.5em',
+						padding: '10px',
+					}}
+				/>
+				<button style={{ padding: '15px', fontSize: '1.2em' }}>
+					{isGenerating ? <DefaultSpinner /> : 'Send'}
+				</button>
 			</form>
 		</div>
 	)
